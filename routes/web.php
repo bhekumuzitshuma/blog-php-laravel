@@ -14,6 +14,7 @@ Route::get('posts', [PostController::class, 'index'])->name('posts.index'); // P
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show'); // View single post
 
 Route::get('categories/{category}/posts', [CategoryController::class, 'showPosts'])->name('categories.posts');
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {

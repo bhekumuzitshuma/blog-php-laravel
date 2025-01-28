@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,8 +14,10 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('user', 'category')->paginate(10); // Get posts with relationships
-        return view('posts.index', compact('posts'));
+        $categories = Category::all(); // Retrieve all categories
+        return view('posts.index', compact('posts', 'categories')); // Pass both to the view
     }
+    
 
     /**
      * Show the form for creating a new resource.
