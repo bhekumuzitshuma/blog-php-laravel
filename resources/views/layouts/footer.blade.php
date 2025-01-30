@@ -1,5 +1,5 @@
 
-<div class=" bg-white dark:bg-gray-900 ">
+<div class=" bg-white border-t border-gray-600 dark:bg-gray-900 ">
 
     <footer class="mx-auto max-w-[1080px]">
         <div class="mx-auto w-full max-w-screen-xl">
@@ -70,8 +70,11 @@
             </ul>
         </div>
     </div>
-    <div class="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2023 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.
+</div>
+</footer>
+<div class="px-4 py-6 bg-gray-100 dark:bg-gray-800">
+    <div class="max-w-[1080px] mx-auto  md:flex md:items-center md:justify-between">
+        <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2023 <a href="">The Blog</a>. All Rights Reserved.
         </span>
         <div class="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
             <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white">
@@ -107,6 +110,5 @@
         </div>
     </div>
 </div>
-</footer>
 
 </div>
