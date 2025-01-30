@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-[1080px] mx-auto">
-    <section class="bg-white dark:bg-gray-900">
+    <section class="bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-12 lg:px-12">
             <a href="#" class="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-200 rounded-full bg-gray-800 hover:bg-teal-900" role="alert">
                 <span class="text-xs bg-teal-600 rounded-full text-white px-4 py-1.5 mr-3">New</span> <span class="text-sm font-medium">New Post is published! See what's new</span> 
@@ -58,13 +58,18 @@
 
 
 
-    <!-- Blog Posts Section -->
-    <div class="mt-10">
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Latest Posts</h2>
+   <!-- Blog Posts Section -->
+<div class="mt-10 pb-10">
+    <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Latest Posts</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="relative">
+        <!-- Fade effect on the left edge -->
+        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white dark:from-gray-900 to-transparent z-10"></div>
+
+        <!-- Scrollable container for the carousel -->
+        <div class="flex overflow-x-auto scroll-smooth space-x-6 py-4 px-4 hide-scrollbar">
             @forelse ($posts as $post)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                <div class="flex-shrink-0 w-80 bg-gray-800 rounded-lg shadow p-4">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200">
                         <a href="{{ route('posts.show', $post->id) }}">
                             {{ $post->title }}
@@ -85,6 +90,84 @@
                 </p>
             @endforelse
         </div>
+
+        <!-- Fade effect on the right edge -->
+        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10"></div>
     </div>
+
+    <!-- Dots container -->
+    <div class="flex justify-center space-x-2 mt-4">
+        @foreach ($posts as $index => $post)
+            <button class="carousel-dot w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-600 hover:bg-gray-600 dark:hover:bg-gray-400 transition-colors" data-index="{{ $index }}"></button>
+        @endforeach
+    </div>
+    <style>
+        /* Hide the scrollbar */
+        .hide-scrollbar {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+    
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
+        }
+    
+        /* Smooth scrolling */
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    
+        /* Ensure the carousel items don't wrap */
+        .flex-shrink-0 {
+            flex-shrink: 0;
+        }
+    
+        /* Fade effect */
+        .bg-gradient-to-r, .bg-gradient-to-l {
+            pointer-events: none; /* Ensure clicks pass through to the carousel */
+        }
+    
+        /* Active dot style */
+        .carousel-dot.active {
+            background-color: #3b82f6; /* Blue color for active dot */
+        }
+    </style>
+    <script>
+        const carousel = document.querySelector('.flex.overflow-x-auto');
+        const dots = document.querySelectorAll('.carousel-dot');
+    
+        // Function to scroll to a specific index
+        const scrollToIndex = (index) => {
+            const postWidth = document.querySelector('.flex-shrink-0').offsetWidth + 24; // 24px for gap
+            carousel.scrollTo({ left: index * postWidth, behavior: 'smooth' });
+        };
+    
+        // Add click event listeners to dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                scrollToIndex(index);
+                updateActiveDot(index);
+            });
+        });
+    
+        // Function to update the active dot
+        const updateActiveDot = (activeIndex) => {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        };
+    
+        // Update dots based on scroll position
+        carousel.addEventListener('scroll', () => {
+            const scrollPosition = carousel.scrollLeft;
+            const postWidth = document.querySelector('.flex-shrink-0').offsetWidth + 24; // 24px for gap
+            const activeIndex = Math.round(scrollPosition / postWidth);
+            updateActiveDot(activeIndex);
+        });
+    
+        // Initialize the first dot as active
+        updateActiveDot(0);
+    </script>
+</div>
 </div>
 @endsection
